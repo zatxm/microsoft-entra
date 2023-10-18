@@ -1,0 +1,22 @@
+{
+    "name": "zatxm/microsoft-entra",
+    "description": "PHP version of simple microsoft entra application, including oauth2 login authentication to obtain token, api request",
+    "keywords": ["http", "microsoft", "microsoft entra", "graph", "oauth2.0"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zatxm",
+            "email": "zatxm120@gmail.com",
+            "homepage": "https://github.com/zatxm"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "zatxm/arequest": "^3.0",
+    },
+    "autoload": {
+        "psr-4": {
+            "Zatxm\\MicrosoftEntra\\": "src/"
+        }
+    }
+}
