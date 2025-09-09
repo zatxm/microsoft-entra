@@ -5,8 +5,8 @@
  */
 namespace Zatxm\MicrosoftEntra;
 
-use Zatxm\ARequest\Curl;
-use Zatxm\ARequest\CurlErr;
+use Zatxm\YRequest\Curl;
+use Zatxm\YRequest\CurlErr;
 
 class EntraApi
 {
@@ -47,20 +47,23 @@ class EntraApi
         if ($this->curl === null) {
             $this->curl = Curl::boot();
         }
-        $url = $graphApiEndpoint . '/' . ltrim($path, '/');
+        $url = $this->graphApiEndpoint . '/' . ltrim($path, '/');
         $headers = [
-            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Authorization' => "Bearer {$this->accessToken}",
             'Content-Type'  => 'application/json'
         ];
         $this->curl->method($method)->header($headers);
-        if ($method == 'GET') {
-            if ($params) {
-                $url .= '?' . (is_array($params) ? http_build_query($params, '', '&', PHP_QUERY_RFC3986) : $params);
-            }
-        } else {
-            if ($params) {
-                $this->curl->params(is_array($params) ? json_encode($params) : $params);
-            }
+        switch ($method) {
+            case 'GET':
+                if ($params) {
+                    $url .= '?' . (is_array($params) ? http_build_query($params, '', '&', PHP_QUERY_RFC3986) : $params);
+                }
+                break;
+            default:
+                if ($params) {
+                    $this->curl->params(is_array($params) ? json_encode($params) : $params);
+                }
+                break;
         }
         $res = $this->curl->url($url)->go();
         if (CurlErr::is($res)) {

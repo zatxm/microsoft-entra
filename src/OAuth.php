@@ -5,8 +5,8 @@
  */
 namespace Zatxm\MicrosoftEntra;
 
-use Zatxm\ARequest\Curl;
-use Zatxm\ARequest\CurlErr;
+use Zatxm\YRequest\Curl;
+use Zatxm\YRequest\CurlErr;
 
 class OAuth
 {
@@ -109,7 +109,7 @@ class OAuth
     public function getAccessTokenRefresh($refreshToken)
     {
         $url = $this->option['oauthAuthority'] . $this->option['oauthTokenEndpoint'];
-        $headers = ['Content-Type'=>'application/x-www-form-urlencoded'];
+        // $headers = ['Content-Type'=>'application/x-www-form-urlencoded'];
         $params = [
             'client_id' => $this->option['clientId'],
             'grant_type' => 'refresh_token',
@@ -119,6 +119,7 @@ class OAuth
         $res = Curl::boot()
             ->url($url)
             ->method('POST')
+            // ->header($headers)
             ->params($params)
             ->go();
         if (CurlErr::is($res)) {

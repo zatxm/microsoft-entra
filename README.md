@@ -1,9 +1,8 @@
-Microsoft Entra Sample Api Request
-==========
+# Microsoft Entra Sample Api Request
 
 php版简单microsoft entra应用，包括oauth2登录鉴权获取token，api请求
 
-# Usage
+## Usage
 
 composer require zatxm/microsoft-entra
 
@@ -101,6 +100,6 @@ $accessTokenArr = $oauth->getAccessTokenRefresh($refreshToken);
 $accessToken = $accessTokenArr['access_token']; //可能有error错误码
 ```
 
-# License
+## License
 
 MIT
