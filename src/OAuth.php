@@ -93,12 +93,13 @@ class OAuth
         $res = Curl::boot()
             ->url($url)
             ->method('POST')
+            // ->header($headers)
             ->params($params)
             ->go();
         if (CurlErr::is($res)) {
             return ['error'=>$res->code, 'error_description'=>$res->message];
         }
-        return json_decode($res['data']['msg'], true);
+        return json_decode($res['response']['data'], true);
     }
 
     /**
@@ -125,7 +126,7 @@ class OAuth
         if (CurlErr::is($res)) {
             return ['error'=>$res->code, 'error_description'=>$res->message];
         }
-        return json_decode($res['data']['msg'], true);
+        return json_decode($res['response']['data'], true);
     }
 
     /**

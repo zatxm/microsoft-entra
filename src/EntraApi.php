@@ -69,6 +69,6 @@ class EntraApi
         if (CurlErr::is($res)) {
             return ['error'=>$res->code, 'error_description'=>$res->message];
         }
-        return ['status'=>$res['data']['code'], 'data'=>$res['data']['msg']];
+        return ['status'=>$res['response']['code'], 'data'=>$res['response']['data']];
     }
 }
