@@ -81,7 +81,7 @@ class OAuth
     public function getAccessToken($authorizationCode, $codeVerifier)
     {
         $url = $this->option['oauthAuthority'] . $this->option['oauthTokenEndpoint'];
-        $headers = ['Content-Type'=>'application/x-www-form-urlencoded'];
+        // $headers = ['Content-Type'=>'application/x-www-form-urlencoded'];
         $params = [
             'client_id' => $this->option['clientId'],
             'code'      => $authorizationCode,
