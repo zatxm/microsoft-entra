@@ -16,6 +16,8 @@ class EntraApi
     private $accessToken = '';
     // curl通信
     private $curl = null;
+    // 额外头部信息
+    private $extraHeaders = [];
 
     public function __construct($accessToken = '', $graphApiEndpoint = '')
     {
@@ -36,8 +38,19 @@ class EntraApi
     }
 
     /**
+     * 设置额外头部信息
+     * @param array $headers
+     * @return static
+     */
+    public function setExtraHeaders($headers = [])
+    {
+        $this->extraHeaders = $headers;
+        return $this;
+    }
+
+    /**
      * 通信获取数据
-     * @param  string $path   资源path
+     * @param  string $path   资源path,可能是个完整url
      * @param  array  $params 参数
      * @param  string $method 请求方式
      * @return array
@@ -47,11 +60,15 @@ class EntraApi
         if ($this->curl === null) {
             $this->curl = Curl::boot();
         }
-        $url = $this->graphApiEndpoint . '/' . ltrim($path, '/');
+        $url = (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) ? $path : $this->graphApiEndpoint . '/' . ltrim($path, '/');
         $headers = [
             'Authorization' => "Bearer {$this->accessToken}",
             'Content-Type'  => 'application/json'
         ];
+        if ($this->extraHeaders) {
+            $headers = array_merge($headers, $this->extraHeaders);
+            $this->extraHeaders = [];
+        }
         $this->curl->method($method)->header($headers);
         switch ($method) {
             case 'GET':
